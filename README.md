@@ -10,3 +10,17 @@ To run it, do
     sudo docker build -t sunrise .
     sudo docker run sunrise
 
+More plausibly, though, you'll want a root crontab entry like
+
+    0 6 * * * docker run sunrise
+
+
+It takes one argument, the length of the faux sunrise in minutes. If you'd
+like to test out the full cycle while watching the commands go, do:
+
+    sudo docker run -t sunrise 1
+
+
+Note that the current code is insanely specific to my own setup, and
+is mainly offered as an example. If others are interested in using it,
+we can make it more configurable and flexible.
