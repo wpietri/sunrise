@@ -4,7 +4,7 @@ require 'json'
 require 'rest_client'
 
 sunrise_time = ARGV[0] || 30
-pace = sunrise_time * 2 # seconds per minute, basically
+pace = sunrise_time.to_i * 2 # seconds per minute, basically
 
 BASE_URL = "http://192.168.1.199/api/080ed655b6f74144a29fd2f256eff3ae"
 
