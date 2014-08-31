@@ -40,8 +40,8 @@ sleep 10*pace
 group 0, {bri: 255, ct:333, transitiontime: 10*pace*10}
 sleep 10*pace
 
-# over the next few hours, get daylight-y
-group 0, {ct:153, transitiontime: 180*pace*10}
+# shift to daytime color over the longest period allowed
+group 0, {ct:153, transitiontime: 65535}
 
 
 
