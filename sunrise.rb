@@ -18,11 +18,12 @@ end
 
 # sunrise comes up over 30 minutes to full brightness
 
-# 5 minutes of pre-dawn blue
-light 4, {bri: 0, xy:[0.23,0.23], transitiontime: 0, on: true}
+# 5 minutes of lightstrip red
+light 4, {bri: 0, xy:[0.65,0.32], transitiontime: 0, on: true}
 sleep 0.1
-light 4, {bri: 255, xy:[0.23,0.23], transitiontime: 5*pace*10}
+light 4, {bri: 255, xy:[0.65,0.32], transitiontime: 5*pace*10}
 sleep 5*pace
+
 
 # 5 minutes: bring light 1 up
 light 1, {bri: 0, xy:[0.65,0.32], transitiontime: 0, on: true}
