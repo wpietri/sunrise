@@ -41,15 +41,15 @@ sleep 5*pace
 #now lights are in sync, so use groups
 
 # 10 minutes: shift to warm light at medium brightness
-group 0, {bri: 125, ct:500, transitiontime: 10*pace*10}
+group 0, {bri: 125, xy:[0.5261,0.4132], transitiontime: 10*pace*10}
 sleep 10*pace
 
 # 10 minutes: shift to normal light at high brightness
-group 0, {bri: 255, ct:333, transitiontime: 10*pace*10}
+group 0, {bri: 255, xy:[0.4358,0.4037], transitiontime: 10*pace*10}
 sleep 10*pace
 
 # shift to daytime color over the longest period allowed
-group 0, {ct:153, transitiontime: 65535}
+group 0, {xy:[0.3124,0.3226], transitiontime: 65535}
 
 
 

@@ -7,5 +7,5 @@ RUN apt-get install -y build-essential
 RUN gem install json rest-client
 ADD sunrise.rb /usr/local/bin/sunrise
 
-CMD ["/usr/local/bin/sunrise"]
-
+ENTRYPOINT ["/usr/local/bin/sunrise"]
+CMD []
