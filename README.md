@@ -24,3 +24,9 @@ like to test out the full cycle while watching the commands go, do:
 Note that the current code is insanely specific to my own setup, and
 is mainly offered as an example. If others are interested in using it,
 we can make it more configurable and flexible.
+
+tools
+=====
+
+There's a tools directory with various things other developers might
+find handy, things I ended up having to make as I went along.
