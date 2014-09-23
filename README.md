@@ -3,10 +3,11 @@ sunrise
 
 Some automation for Philips Hue lights.
 
-Currently a simple Ruby script that simulates a sunrise to aid in fighting winter blues.
+Currently a simple Scala app that simulates a sunrise to aid in fighting winter blues.
 
 To run it, do
 
+    sbt assembly
     sudo docker build -t sunrise .
     sudo docker run sunrise
 
@@ -30,3 +31,16 @@ tools
 
 There's a tools directory with various things other developers might
 find handy, things I ended up having to make as I went along.
+
+
+build environment
+=================
+
+To build this on Ubuntu 14.04 you'll have to do something like
+
+    sudo aptitude install openjdk-6-jre-headless openjdk-6-jre libjansi-java
+    wget http://www.scala-lang.org/files/archive/scala-2.10.4.deb
+    wget https://dl.bintray.com/sbt/debian/sbt-0.13.6.deb
+    sudo dpkg -i scala-2.10.4.deb  sbt-0.13.6.deb
+    
+With that installed, the "sbt assembly" command should do the rest.
