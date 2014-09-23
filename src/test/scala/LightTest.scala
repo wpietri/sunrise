@@ -10,13 +10,22 @@ class LightTest extends FlatSpec with ShouldMatchers {
 
     val light = new Bridge(api).light(1)
 
-    api.nextResponse = Json.obj("state" -> Json.obj("on" -> false))
+    api.nextGetResponse = Json.obj("state" -> Json.obj("on" -> false))
     light.on should be(false)
 
-    api.nextResponse = Json.obj("state" -> Json.obj("on" -> true))
+    api.nextGetResponse = Json.obj("state" -> Json.obj("on" -> true))
     light.on should be(true)
 
-    api.lastPath should be("/lights/1")
+    api.lastPath should endWith("/lights/1")
+  }
+
+  "A light" should "be color-settable" in {
+
+    val light = new Bridge(api).light(1)
+    light.set(new Color(0.65, 0.32))
+    api.lastPath should endWith("/lights/1/state")
+    api.lastData should be(Json.obj("xy" -> Json.arr(0.65, 0.32)))
+
   }
 
 }
