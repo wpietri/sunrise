@@ -1,4 +1,8 @@
-name := "sunrise"
+import sbtassembly.Plugin.AssemblyKeys._
+
+// put this at the top of the file
+
+// name := "sunrise"
 
 version := "1.0"
 
@@ -11,3 +15,12 @@ libraryDependencies += "org.scalamock" %% "scalamock-scalatest-support" % "3.0.1
 libraryDependencies += "com.stackmob" %% "newman" % "1.3.5"
 
 libraryDependencies += "com.typesafe.play" %% "play-json" % "2.2.1"
+
+mainClass := Some("SunriseApp")
+
+exportJars := true
+
+
+assemblySettings
+
+jarName in assembly := "sunrise.jar"
