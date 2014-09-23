@@ -35,5 +35,10 @@ class HueParameterTest extends FlatSpec with ShouldMatchers {
     TransitionTime(30.seconds).toJsObject should be(Json.obj("transitiontime" -> 300))
   }
 
+  it should "handle too-long times gracefully" in {
+    TransitionTime(30.days).toJsObject should be(Json.obj("transitiontime" -> 65535))
+
+  }
+
 
 }
