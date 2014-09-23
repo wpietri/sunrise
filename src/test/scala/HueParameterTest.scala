@@ -2,6 +2,9 @@ import org.scalatest._
 import org.scalatest.matchers.ShouldMatchers
 import play.api.libs.json.Json
 
+import scala.concurrent.duration._
+
+
 
 class HueParameterTest extends FlatSpec with ShouldMatchers {
 
@@ -26,6 +29,10 @@ class HueParameterTest extends FlatSpec with ShouldMatchers {
     intercept[Exception] {
       Brightness(256)
     }
+  }
+
+  "TransitionTime" should "convert to JSON" in {
+    TransitionTime(30.seconds).toJsObject should be(Json.obj("transitiontime" -> 300))
   }
 
 
