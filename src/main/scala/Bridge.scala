@@ -2,6 +2,8 @@ import play.api.libs.json._
 
 
 class Bridge(api: ApiConnector = new ApacheApiConnector("192.168.1.81")) {
+  def group(number: Int) = new Group(this, number)
+
 
   val key: String = "080ed655b6f74144a29fd2f256eff3ae"
 

@@ -1,13 +1,10 @@
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.JsValue
 
-class Light(bridge: Bridge, number: Integer) {
+class Light(val bridge: Bridge, number: Integer) extends HueDevice {
 
-  def set(p: HueParameter*): Unit = {
-    println(p.getClass)
-    val combinedJson = p.foldLeft(Json.obj())((j, b) => j.deepMerge(b.toJsObject))
-    bridge.put("/lights/" + number + "/state", combinedJson)
+  def path: String = {
+    "/lights/" + number + "/state"
   }
-
 
   def on(): Boolean = {
     val json: JsValue = bridge.get("/lights/" + number)
