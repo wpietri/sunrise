@@ -4,7 +4,8 @@ import scala.concurrent.duration._
 object SunriseApp {
 
   def main(args: Array[String]) = {
-    val pace = 60
+    val pace = if (args.length > 0) args(0).toInt else 60
+    println(s"pace is $pace")
 
     val bridge = new Bridge
     val l1 = bridge.light(1)
