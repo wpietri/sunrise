@@ -22,9 +22,16 @@ class LightTest extends FlatSpec with ShouldMatchers {
   it should "be color-settable" in {
 
     val light = new Bridge(api).light(1)
-    light.set(new Color(0.65, 0.32))
+    light.set(Color(0.65, 0.32))
     api.lastPath should endWith("/lights/1/state")
     api.lastData should be(Json.obj("xy" -> Json.arr(0.65, 0.32)))
+  }
+
+  it should "set multiple parameters" in {
+    val light = new Bridge(api).light(1)
+    light.set(Color(0.65, 0.32), On(true), Brightness(127))
+    api.lastPath should endWith("/lights/1/state")
+    api.lastData should be(Json.obj("xy" -> Json.arr(0.65, 0.32), "on" -> true, "bri" -> 127))
 
   }
 
