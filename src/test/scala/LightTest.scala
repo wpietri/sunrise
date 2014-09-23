@@ -19,7 +19,7 @@ class LightTest extends FlatSpec with ShouldMatchers {
     api.lastPath should endWith("/lights/1")
   }
 
-  "A light" should "be color-settable" in {
+  it should "be color-settable" in {
 
     val light = new Bridge(api).light(1)
     light.set(new Color(0.65, 0.32))
