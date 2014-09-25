@@ -6,7 +6,8 @@ object SunriseApp extends App {
   val pace = if (args.length > 0) args(0).toInt else 60
   println(s"pace is $pace")
 
-  val bridge = new Bridge
+  val bridge = new Bridge("192.168.1.81", 80, "080ed655b6f74144a29fd2f256eff3ae")
+  //  val bridge = new Bridge("localhost", 2233, "080ed655b6f74144a29fd2f256eff3ae")
   val l1 = bridge.light(1)
   val l2 = bridge.light(2)
   val l3 = bridge.light(3)

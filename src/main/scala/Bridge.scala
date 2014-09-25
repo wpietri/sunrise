@@ -1,11 +1,13 @@
 import play.api.libs.json._
 
 
-class Bridge(api: ApiConnector = new ApacheApiConnector("192.168.1.81")) {
+class Bridge(api: ApiConnector, key: String) {
+
+  def this(host: String, key: String) = this(new ApacheApiConnector(host, 80), key)
+
+  def this(host: String, port: Int, key: String) = this(new ApacheApiConnector(host, port), key)
+
   def group(number: Int) = new Group(this, number)
-
-
-  val key: String = "080ed655b6f74144a29fd2f256eff3ae"
 
   def light(number: Int) = new Light(this, number)
 

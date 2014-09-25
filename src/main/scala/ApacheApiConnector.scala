@@ -1,15 +1,34 @@
 import java.net.URL
+import java.util.concurrent.{Executors, ThreadFactory}
 
 import com.stackmob.newman.ApacheHttpClient
 import com.stackmob.newman.dsl._
 import com.stackmob.newman.response.HttpResponse
 import play.api.libs.json.{JsArray, JsObject, Json}
 
-import scala.concurrent.Await
 import scala.concurrent.duration._
+import scala.concurrent.{Await, ExecutionContext, ExecutionContextExecutorService}
 
-class ApacheApiConnector(host: String) extends ApiConnector {
-  implicit val httpClient: ApacheHttpClient = new ApacheHttpClient()
+class ApacheApiConnector(host: String, port: Int = 80) extends ApiConnector {
+  implicit val httpClient: ApacheHttpClient = newApacheHttpClient
+
+  def newApacheHttpClient: ApacheHttpClient = {
+    implicit val ctx = createUglyWorkaround
+    new ApacheHttpClient()
+  }
+
+  def createUglyWorkaround: ExecutionContextExecutorService = {
+    val factory = new ThreadFactory {
+      override def newThread(run: Runnable) = {
+        val t = new Thread(run)
+        t.setDaemon(true)
+        t
+      }
+    }
+    val svc = Executors.newFixedThreadPool(20, factory) //or choose a cached thread pool, etc...
+    val x = ExecutionContext.fromExecutorService(svc)
+    x
+  }
 
   override def get(path: String): JsObject = {
     val request = GET(url(path))
@@ -39,7 +58,7 @@ class ApacheApiConnector(host: String) extends ApiConnector {
   }
 
   def url(path: String): URL = {
-    val url = new URL("http", host, 80, path)
+    val url = new URL("http", host, port, path)
     url
   }
 
