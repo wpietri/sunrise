@@ -8,6 +8,15 @@ version := "1.0"
 
 resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/"
 
+libraryDependencies ++= Seq(
+  "org.scalanlp" %% "breeze" % "0.9",
+  "org.scalanlp" %% "breeze-natives" % "0.9"
+)
+
+resolvers ++= Seq(
+  "Sonatype Releases" at "https://oss.sonatype.org/content/repositories/releases/"
+)
+
 //libraryDependencies += "org.scalatest" % "scalatest_2.10" % "2.2.1" % "test"
 
 libraryDependencies += "org.scalamock" %% "scalamock-scalatest-support" % "3.0.1" % "test"
