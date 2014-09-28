@@ -14,7 +14,7 @@ class ColorTemperatureCurve {
 
   def apply(tempK: Int) = {
     val x = tempToX(tempK)
-    val y = xToY.y(x)
+    val y = xToY(x)
     (x, y)
   }
 }

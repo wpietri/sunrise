@@ -25,6 +25,8 @@ libraryDependencies += "com.stackmob" %% "newman" % "1.3.5"
 
 libraryDependencies += "com.typesafe.play" %% "play-json" % "2.2.1"
 
+libraryDependencies += "com.github.nscala-time" %% "nscala-time" % "1.4.0"
+
 mainClass := Some("SunriseApp")
 
 exportJars := true

@@ -7,5 +7,5 @@ class ColorCurve {
     DenseVector(Array(0.251, 0.322, 0.387, 0.407, 0.412, 0.342))
   )
 
-  def y(x: Double) = interpolator(x)
+  def apply(x: Double) = interpolator(x)
 }
