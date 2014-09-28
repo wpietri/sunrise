@@ -10,7 +10,7 @@ class ColorCurveTest extends FlatSpec with ShouldMatchers {
     c.y(0.400) should be(0.387 plusOrMinus 0.001)
     c.y(0.446) should be(0.407 plusOrMinus 0.001)
     c.y(0.538) should be(0.412 plusOrMinus 0.001)
-    c.y(0.652) should be(0.342 plusOrMinus 0.001)
+    c.y(0.653) should be(0.342 plusOrMinus 0.001)
   }
 
   "The interpolated points" should "also be correct" in {
