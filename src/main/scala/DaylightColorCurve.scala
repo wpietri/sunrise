@@ -16,7 +16,7 @@ object DaylightColorCurve {
       6500, 3000, 1000, 1000))
   )
 
-  def apply(t: LocalTime) = {
+  def apply(t: LocalTime): Double = {
     interpolator(timeAsFractionOfDay(t))
   }
 

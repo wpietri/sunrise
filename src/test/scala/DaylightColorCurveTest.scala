@@ -1,6 +1,5 @@
 import com.github.nscala_time.time.StaticLocalTime
-import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{FlatSpec, ShouldMatchers}
 
 class DaylightColorCurveTest extends FlatSpec with ShouldMatchers {
 
