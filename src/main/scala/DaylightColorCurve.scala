@@ -3,7 +3,7 @@ import breeze.linalg.DenseVector
 import org.joda.time.LocalTime
 
 object DaylightColorCurve {
-  val MillisPerDay = 1.0 * 24 * 60 * 60 * 1000
+  val MillisPerDay = 24 * 60 * 60 * 1000
 
   val interpolator = new LinearInterpolator(
     DenseVector(Array(
@@ -21,7 +21,7 @@ object DaylightColorCurve {
   }
 
   def timeAsFractionOfDay(t: LocalTime): Double = {
-    t.millisOfDay().get() / MillisPerDay
+    1.0 * t.millisOfDay().get() / MillisPerDay
   }
 
   def t(hours: Int, minutes: Int = 0): Double = (60 * hours + minutes) / (60.0 * 24)
