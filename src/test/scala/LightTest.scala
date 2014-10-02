@@ -42,8 +42,19 @@ class LightTest extends FlatSpec with ShouldMatchers {
     f.api.nextGetResponse = FullLightResponse.as[JsObject]
     f.light.model should be("LCT001")
     f.api.lastPath should endWith("/lights/1")
+  }
+
+  it should "know the light output for known bulbs" in {
+    val f = fixture
+    f.api.nextGetResponse = Json.obj("modelid" -> "LCT001")
+    f.light.maxLumens should be(600)
+    f.api.nextGetResponse = Json.obj("modelid" -> "LST001")
+    f.light.maxLumens should be(120)
+    f.api.nextGetResponse = Json.obj("modelid" -> "LWB004")
+    f.light.maxLumens should be(750)
 
   }
+
 
   val FullLightResponse = Json.parse( """{
                                         	"state": {

@@ -11,4 +11,10 @@ class Light(val bridge: Bridge, number: Integer) extends HueDevice {
 
   def fetchLightInfo: JsValue = bridge.get("/lights/" + number)
 
+  def maxLumens: Int = model match {
+    case "LCT001" => 600
+    case "LST001" => 120
+    case "LWB004" => 750
+  }
+
 }
