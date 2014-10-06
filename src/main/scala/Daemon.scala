@@ -22,7 +22,7 @@ class DaylightMode(bridge: Bridge) extends MyActor {
       val lightLevel = desiredLightOutput(LocalTime.now())
       log.info("desired level: {}", lightLevel)
       val lightStates = LightOutputCalculator(bridge.lights, lightLevel)
-      log.info("calculated states: {}", lightStates)
+      log.debug("calculated states: {}", lightStates)
       for ((light, level) <- lightStates) {
         val parameters = paramsFor(light, level)
         log.info("setting light {} to {}", light, parameters)

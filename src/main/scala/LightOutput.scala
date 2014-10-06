@@ -16,4 +16,7 @@ case class LightOutput(x: Double, y: Double, lumens: Double) {
     assert(this.y == other.y)
     LightOutput(this.x, this.y, this.lumens - other.lumens)
   }
+
+
+  override def toString: String = f"LightOutput($x%1.3f,$y%1.3f,$lumens%1.0f)"
 }

@@ -3,7 +3,10 @@ sunrise
 
 Some automation for Philips Hue lights.
 
-Currently a simple Scala app that simulates a sunrise to aid in fighting winter blues.
+Currently a simple Scala daemon that simulates a day/night cycle to aid
+in fighting winter blues. Rather than letting dawn come ever later and
+sunset ever earlier, its brings up and down the lights at a fixed time,
+vaguely approximating natural light.
 
 To run it, do
 
@@ -11,16 +14,11 @@ To run it, do
     sudo docker build -t sunrise .
     sudo docker run sunrise
 
-More plausibly, though, you'll want a root crontab entry like
+If you'd rather run it directly, you can also do
 
-    0 6 * * * docker run sunrise
-
-
-It takes one argument, the length of the faux sunrise in minutes. If you'd
-like to test out the full cycle while watching the commands go, do:
-
-    sudo docker run -t sunrise 1
-
+    sbt assembly
+    java -jar [buildpath]/sunrise.jar
+    
 
 Note that the current code is insanely specific to my own setup, and
 is mainly offered as an example. If others are interested in using it,
