@@ -48,10 +48,23 @@ class LightTest extends FlatSpec with ShouldMatchers {
     val f = fixture
     f.api.nextGetResponse = Json.obj("modelid" -> "LCT001")
     f.light.maxLumens should be(600)
+    f.light.minLumens should be(30) // from specs
     f.api.nextGetResponse = Json.obj("modelid" -> "LST001")
     f.light.maxLumens should be(120)
+    f.light.minLumens should be(6) // estimated
     f.api.nextGetResponse = Json.obj("modelid" -> "LWB004")
     f.light.maxLumens should be(750)
+    f.light.minLumens should be(37) // estimated
+  }
+
+  it should "know what output it can promise" in {
+    val f = fixture
+    f.api.nextGetResponse = Json.obj("modelid" -> "LST001") // max 120; min 120 * 0.05 = 6
+
+    f.light.closestOutput(LightOutput(0.3, 0.3, 1)) should be(LightOutput(0.3, 0.3, 0))
+    f.light.closestOutput(LightOutput(0.3, 0.3, 10)) should be(LightOutput(0.3, 0.3, 10))
+    f.light.closestOutput(LightOutput(0.3, 0.3, 100)) should be(LightOutput(0.3, 0.3, 100))
+    f.light.closestOutput(LightOutput(0.3, 0.3, 200)) should be(LightOutput(0.3, 0.3, 120))
 
   }
 

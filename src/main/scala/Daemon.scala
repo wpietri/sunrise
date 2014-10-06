@@ -5,12 +5,66 @@ import org.joda.time.LocalTime
 import scala.concurrent.duration._
 
 
+abstract class MyActor extends Actor {
+
+  val log = Logging(context.system, this)
+
+
+}
+
+
 class MyMessage
+
+class DaylightMode(bridge: Bridge) extends MyActor {
+
+  override def receive: Actor.Receive = {
+    case Tick =>
+      val lightLevel = desiredLightOutput(LocalTime.now())
+      log.info("desired level: {}", lightLevel)
+      val lightStates = LightOutputCalculator(bridge.lights, lightLevel)
+      log.info("calculated states: {}", lightStates)
+      for ((light, level) <- lightStates) {
+        val parameters = paramsFor(light, level)
+        log.info("setting light {} to {}", light, parameters)
+        light.set(parameters: _*)
+      }
+  }
+
+  def paramsFor(light: Light, output: LightOutput): Seq[HueParameter] = {
+    if (output.lumens <= 0)
+      Seq(On(false))
+    else
+      Seq(On(true), Color(output.x, output.y), Brightness((255 * output.lumens / light.maxLumens).toInt), TransitionTime(DaylightMode.UpdateFrequency))
+  }
+
+  def desiredLightOutput(t: LocalTime): LightOutput = {
+    val desiredColor = ColorTemperatureCurve(DaylightColorCurve(t))
+    val desiredLumens = DaylightLumensCurve(t)
+    LightOutput(desiredColor._1, desiredColor._2, desiredLumens)
+  }
+}
+
+class Wrangler extends MyActor {
+
+  import context._
+
+  val bridge = new Bridge("192.168.1.81", 80, "080ed655b6f74144a29fd2f256eff3ae")
+  val allLights = bridge.group(0)
+  val daylightMode = context.system.actorOf(DaylightMode.props(bridge), "daylight")
+
+
+  override def receive: Receive = {
+    case Start =>
+      log.info("starting")
+      context.system.scheduler.schedule(1.second, DaylightMode.UpdateFrequency, daylightMode, Tick)
+      log.info("started")
+  }
+}
+
 
 case object Start extends MyMessage
 
 case object Tick extends MyMessage
-
 
 object Daemon extends App {
   val system = ActorSystem("Sunrise")
@@ -19,38 +73,12 @@ object Daemon extends App {
 }
 
 
-abstract class MyActor extends Actor {
+object DaylightMode {
+  def props(bridge: Bridge): Props = Props(new DaylightMode(bridge))
 
-  val log = Logging(context.system, this)
-
+  val UpdateFrequency = 15.second
 
 }
 
-class DaylightMode extends MyActor {
-  override def receive: Actor.Receive = {
-    case Tick =>
-      val t = LocalTime.now()
-      val desiredLumens = DaylightLumensCurve(t)
-      val desiredColor = ColorTemperatureCurve(DaylightColorCurve(t))
-      log.info("{} {} {}", desiredLumens, desiredColor._1, desiredColor._2)
-  }
-}
 
-
-class Wrangler extends MyActor {
-
-  import context._
-
-  val bridge = new Bridge("192.168.1.81", 80, "080ed655b6f74144a29fd2f256eff3ae")
-  val allLights = bridge.group(0)
-  val daylightMode = context.system.actorOf(Props[DaylightMode], "daylight")
-
-
-  override def receive: Receive = {
-    case Start =>
-      log.info("starting")
-      context.system.scheduler.schedule(1.second, 1.second, daylightMode, Tick)
-      log.info("started")
-  }
-}
 

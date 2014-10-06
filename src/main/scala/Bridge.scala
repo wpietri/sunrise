@@ -13,8 +13,7 @@ class Bridge(api: ApiConnector, key: String) {
 
   def light(number: Int) = new Light(this, number)
 
-  def lights = get("/lights").keys.map(id => light(id.toInt))
-
+  def lights: Seq[Light] = get("/lights").keys.map(id => light(id.toInt)).toSeq
 
 
   def get(path: String): JsObject = api.get("/api/" + key + path)

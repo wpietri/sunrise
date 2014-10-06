@@ -10,6 +10,8 @@ import scala.concurrent.duration._
 import scala.concurrent.{Await, ExecutionContext, ExecutionContextExecutorService}
 
 class ApacheApiConnector(host: String, port: Int = 80) extends ApiConnector {
+  private val debug = false
+
   implicit val httpClient: ApacheHttpClient = newApacheHttpClient
 
   def newApacheHttpClient: ApacheHttpClient = {
@@ -42,7 +44,6 @@ class ApacheApiConnector(host: String, port: Int = 80) extends ApiConnector {
 
   override def put(path: String, data: JsObject): JsArray = {
     val request = PUT(url(path)).addBody(Json.prettyPrint(data))
-    println(s"Sending request to $path with data $data")
     val response = Await.result(request.apply, 30.seconds)
     noteResponse(path, response)
     Json.parse(response.bodyString) match {
@@ -54,7 +55,7 @@ class ApacheApiConnector(host: String, port: Int = 80) extends ApiConnector {
 
 
   def noteResponse(path: String, response: HttpResponse) {
-    println(s"Response returned from $path with code ${response.code}, body ${response.bodyString}")
+    if (debug) println(s"Response returned from $path with code ${response.code}, body ${response.bodyString}")
   }
 
   def url(path: String): URL = {

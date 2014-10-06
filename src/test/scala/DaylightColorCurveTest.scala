@@ -17,8 +17,8 @@ class DaylightColorCurveTest extends FlatSpec with ShouldMatchers {
 
   "Evening" should "go from cool to warm to red" in {
     DaylightColorCurve(t(16)) should be(6500.0 plusOrMinus 10)
-    DaylightColorCurve(t(19)) should be(3000.0 plusOrMinus 10)
-    DaylightColorCurve(t(20, 30)) should be(1000.0 plusOrMinus 10)
+    DaylightColorCurve(t(19)) should be(2500.0 plusOrMinus 10)
+    DaylightColorCurve(t(21, 30)) should be(1000.0 plusOrMinus 10)
     DaylightColorCurve(t(23, 59)) should be(1000.0 plusOrMinus 10)
   }
 
