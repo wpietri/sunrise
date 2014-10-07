@@ -1,12 +1,19 @@
 sunrise
 =======
 
-Some automation for Philips Hue lights.
+Using Phlips Hue LED lights, this simulates a day-night cycle. The
+day starts with a gradual dawn, starting dim and warm. At noon, the
+light is bright and cool. In the evening, the light warms again and
+eventually dims. The goal is to promote a comfortable and regular
+sleep cycle, even when the light outside isn't cooperating due to
+clouds, rain, or the dark mornings and early nights of winter.
 
-Currently a simple Scala daemon that simulates a day/night cycle to aid
-in fighting winter blues. Rather than letting dawn come ever later and
-sunset ever earlier, its brings up and down the lights at a fixed time,
-vaguely approximating natural light.
+It is currently a simple Scala daemon wrapped in Docker for easy
+deployment.
+
+Note that the current code is specific to my own setup and preferences,
+and is mainly offered as an example. If others are interested in using
+it, we can make it more configurable and flexible.
 
 To run it, do
 
@@ -20,9 +27,6 @@ If you'd rather run it directly, you can also do
     java -jar [buildpath]/sunrise.jar
     
 
-Note that the current code is insanely specific to my own setup, and
-is mainly offered as an example. If others are interested in using it,
-we can make it more configurable and flexible.
 
 tools
 =====
