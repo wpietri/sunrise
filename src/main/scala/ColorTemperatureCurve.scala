@@ -5,6 +5,7 @@ import breeze.linalg.DenseVector
 
 // a more formal mathematical version could be taken from http://en.wikipedia.org/wiki/Planckian_locus
 
+/* Maps color temperatures to CIE 1931 color space */
 object ColorTemperatureCurve {
   val tempToX = new CubicInterpolator(
     DenseVector(Array(1000.0, 2366.0, 3600.0, 4800.0, 10000.0, 20000.0)),
