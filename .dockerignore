@@ -1,2 +1,3 @@
-target/streams
 .git
+target/streams
+project/target
