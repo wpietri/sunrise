@@ -56,6 +56,7 @@ class DaylightMode(bridge: Bridge) extends MyActor {
       }
   }
 
+  // todo: should this move to the Light itself? Or should there be a light.set(lightOutput)?
   def paramsFor(light: Light, output: LightOutput): Seq[HueParameter] = {
     if (output.lumens <= 0)
       Seq(On(false))
@@ -67,6 +68,7 @@ class DaylightMode(bridge: Bridge) extends MyActor {
         TransitionTime(Settings.updateFrequency))
   }
 
+  // todo: this moves to the new calculator class (which needs a better name than that)
   def desiredLightOutput(t: LocalTime): LightOutput = {
     val desiredColor = ColorTemperatureCurve(DaylightColorCurve(t))
     val desiredLumens = DaylightLumensCurve(t)
