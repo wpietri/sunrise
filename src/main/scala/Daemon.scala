@@ -2,7 +2,7 @@ import akka.actor._
 import akka.event.Logging
 import hue._
 import light._
-import org.joda.time.{DateTimeZone, LocalTime}
+import org.joda.time.LocalTime
 
 import scala.concurrent.duration._
 
@@ -21,7 +21,7 @@ class DaylightMode(bridge: Bridge) extends MyActor {
 
   override def receive: Actor.Receive = {
     case Tick =>
-      val lightLevel = desiredLightOutput(LocalTime.now(Config.LocalTimeZone))
+      val lightLevel = desiredLightOutput(LocalTime.now(Settings.localTimeZone))
       log.info("desired level: {}", lightLevel)
       val lightStates = LightOutputCalculator(bridge.lights, lightLevel)
       log.debug("calculated states: {}", lightStates)
@@ -40,7 +40,7 @@ class DaylightMode(bridge: Bridge) extends MyActor {
         On(true),
         Color(output.x, output.y),
         Brightness((255 * output.lumens / light.maxLumens).toInt),
-        TransitionTime(Config.UpdateFrequency))
+        TransitionTime(Settings.updateFrequency))
   }
 
   def desiredLightOutput(t: LocalTime): LightOutput = {
@@ -62,7 +62,7 @@ class Wrangler extends MyActor {
   override def receive: Receive = {
     case Start =>
       log.info("starting")
-      context.system.scheduler.schedule(1.second, Config.UpdateFrequency, daylightMode, Tick)
+      context.system.scheduler.schedule(1.second, Settings.updateFrequency, daylightMode, Tick)
       log.info("started")
   }
 }
@@ -83,11 +83,6 @@ object DaylightMode {
   def props(bridge: Bridge): Props = Props(new DaylightMode(bridge))
 }
 
-object Config {
-  val UpdateFrequency = 15.second
-  val LocalTimeZone = DateTimeZone.forID("America/Los_Angeles")
-
-}
 
 
 
