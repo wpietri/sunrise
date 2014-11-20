@@ -1,3 +1,5 @@
+package hue
+
 import play.api.libs.json.{JsObject, Json}
 
 trait HueDevice {

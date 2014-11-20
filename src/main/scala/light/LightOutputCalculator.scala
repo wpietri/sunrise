@@ -1,3 +1,7 @@
+package light
+
+import hue.Light
+
 import scala.collection.mutable
 
 object LightOutputCalculator {

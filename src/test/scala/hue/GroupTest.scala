@@ -1,3 +1,5 @@
+package hue
+
 import org.scalatest._
 import org.scalatest.matchers.ShouldMatchers
 import play.api.libs.json.Json

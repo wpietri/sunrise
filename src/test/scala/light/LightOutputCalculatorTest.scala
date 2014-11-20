@@ -1,3 +1,6 @@
+package light
+
+import hue.{Bridge, FakeApiConnector}
 import org.scalatest.{FlatSpec, ShouldMatchers}
 import play.api.libs.json.Json
 

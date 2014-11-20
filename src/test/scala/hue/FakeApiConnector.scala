@@ -1,3 +1,5 @@
+package hue
+
 import play.api.libs.json.{JsArray, JsObject}
 
 class FakeApiConnector extends ApiConnector {

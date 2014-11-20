@@ -1,3 +1,5 @@
+package light
+
 import breeze.interpolation._
 import breeze.linalg.DenseVector
 

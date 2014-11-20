@@ -1,3 +1,5 @@
+package light
+
 import org.joda.time.LocalTime
 
 trait DaylightCurve {

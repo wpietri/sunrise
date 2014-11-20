@@ -1,3 +1,6 @@
+package hue
+
+import light.LightOutput
 import play.api.libs.json.JsValue
 
 class Light(val bridge: Bridge, val number: Integer) extends HueDevice with Ordered[Light] {

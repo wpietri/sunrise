@@ -1,3 +1,5 @@
+package light
+
 import com.github.nscala_time.time.StaticLocalTime
 import org.scalatest.{FlatSpec, ShouldMatchers}
 

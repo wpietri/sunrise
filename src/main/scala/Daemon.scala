@@ -1,5 +1,7 @@
 import akka.actor._
 import akka.event.Logging
+import hue._
+import light._
 import org.joda.time.{DateTimeZone, LocalTime}
 
 import scala.concurrent.duration._

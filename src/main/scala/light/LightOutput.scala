@@ -1,3 +1,5 @@
+package light
+
 case class LightOutput(x: Double, y: Double, lumens: Double) {
 
   def withLumens(newLumens: Double) = LightOutput(this.x, this.y, newLumens)

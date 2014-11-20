@@ -1,3 +1,5 @@
+package hue
+
 import java.net.URL
 import java.util.concurrent.{Executors, ThreadFactory}
 

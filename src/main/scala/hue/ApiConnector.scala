@@ -1,5 +1,6 @@
-import play.api.libs.json._
+package hue
 
+import play.api.libs.json.{JsArray, JsObject}
 
 trait ApiConnector {
   def get(path: String): JsObject

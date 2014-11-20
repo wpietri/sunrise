@@ -1,9 +1,10 @@
+package hue
+
 import org.scalatest._
 import org.scalatest.matchers.ShouldMatchers
 import play.api.libs.json.Json
 
 import scala.concurrent.duration._
-
 
 
 class HueParameterTest extends FlatSpec with ShouldMatchers {

@@ -1,3 +1,5 @@
+import hue._
+
 import scala.concurrent.duration._
 
 
