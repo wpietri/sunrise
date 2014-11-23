@@ -3,6 +3,8 @@ package light
 case class LightOutput(x: Double, y: Double, lumens: Double) {
   def this(color: (Double, Double), lumens: Double) = this(color._1, color._2, lumens)
 
+  def this(colorTemperature: Double, lumens: Double) = this(ColorTemperatureCurve(colorTemperature), lumens)
+
   def withLumens(newLumens: Double) = LightOutput(this.x, this.y, newLumens)
 
 
@@ -26,4 +28,6 @@ case class LightOutput(x: Double, y: Double, lumens: Double) {
 
 object LightOutput {
   def apply(color: (Double, Double), lumens: Double) = new LightOutput(color, lumens)
+
+  def apply(colorTemperature: Double, lumens: Double) = new LightOutput(colorTemperature, lumens)
 }

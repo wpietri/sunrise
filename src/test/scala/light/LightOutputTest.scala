@@ -22,4 +22,8 @@ class LightOutputTest extends FlatSpec with ShouldMatchers with LightMatchers {
     LightOutput(ColorTemperatureCurve(6500), 100) should equal(LightOutput(0.310, 0.317, 100))
   }
 
+  "Creation from a color temperature" should "work" in {
+    LightOutput(6500, 100) should equal(LightOutput(0.310, 0.317, 100))
+  }
+
 }

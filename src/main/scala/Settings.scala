@@ -1,4 +1,4 @@
-import org.joda.time.{DateTimeZone, Duration, LocalTime}
+import org.joda.time._
 
 import scala.concurrent.duration._
 
@@ -9,9 +9,9 @@ object Settings {
   val localTimeZone = DateTimeZone.forID("America/Los_Angeles")
 
   val dawnStart = new LocalTime(6, 0)
-  val dawnLength = new Duration(3 * 60 * 60 * 1000)
+  val dawnLength = new Period(3, PeriodType.hours())
   val sunsetStart = new LocalTime(18, 30)
-  val sunsetLength = new Duration(3 * 60 * 60 * 1000)
+  val sunsetLength = new Period(3, PeriodType.hours())
 
   val updateFrequency = 15.seconds
 
