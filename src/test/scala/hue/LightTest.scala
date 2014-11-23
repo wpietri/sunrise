@@ -40,6 +40,15 @@ class LightTest extends FlatSpec with ShouldMatchers {
     f.api.lastData should be(Json.obj("xy" -> Json.arr(0.65, 0.32), "on" -> true, "bri" -> 127))
   }
 
+  it should "set light output" in {
+    val f = fixture
+    f.api.addResponse("/lights/1", Json.obj("modelid" -> "LST001", "state" -> Json.obj("on" -> false)))
+
+    f.light.set(LightOutput(0.3, 0.3, 120))
+    f.api.lastPath should endWith("/lights/1/state")
+    f.api.lastData should be(Json.obj("xy" -> Json.arr(0.3, 0.3), "on" -> true, "bri" -> 255, "transitiontime" -> 10))
+  }
+
   it should "know useful facts" in {
     val f = fixture
     f.api.nextGetResponse = FullLightResponse.as[JsObject]
@@ -49,26 +58,25 @@ class LightTest extends FlatSpec with ShouldMatchers {
 
   it should "know the light output for known bulbs" in {
     val f = fixture
-    f.api.nextGetResponse = Json.obj("modelid" -> "LCT001")
+    f.api.addResponse("/lights/1", Json.obj("modelid" -> "LCT001"))
     f.light.maxLumens should be(600)
     f.light.minLumens should be(30) // from specs
-    f.api.nextGetResponse = Json.obj("modelid" -> "LST001")
+    f.api.addResponse("/lights/1", Json.obj("modelid" -> "LST001"))
     f.light.maxLumens should be(120)
     f.light.minLumens should be(6) // estimated
-    f.api.nextGetResponse = Json.obj("modelid" -> "LWB004")
+    f.api.addResponse("/lights/1", Json.obj("modelid" -> "LWB004"))
     f.light.maxLumens should be(750)
     f.light.minLumens should be(37) // estimated
   }
 
   it should "know what output it can promise" in {
     val f = fixture
-    f.api.nextGetResponse = Json.obj("modelid" -> "LST001") // max 120; min 120 * 0.05 = 6
+    f.api.addResponse("/lights/1", Json.obj("modelid" -> "LST001")) // max 120; min 120 * 0.05 = 6
 
     f.light.closestOutput(LightOutput(0.3, 0.3, 1)) should be(LightOutput(0.3, 0.3, 0))
     f.light.closestOutput(LightOutput(0.3, 0.3, 10)) should be(LightOutput(0.3, 0.3, 10))
     f.light.closestOutput(LightOutput(0.3, 0.3, 100)) should be(LightOutput(0.3, 0.3, 100))
     f.light.closestOutput(LightOutput(0.3, 0.3, 200)) should be(LightOutput(0.3, 0.3, 120))
-
   }
 
 

@@ -8,7 +8,7 @@ class LightOutputCalculatorTest extends FlatSpec with ShouldMatchers {
   def lightsForModels(models: String*) = {
     models.map(model => {
       val f = new FakeBulb
-      f.api.nextGetResponse = Json.obj("modelid" -> model)
+      f.api.addResponse("/lights/1", Json.obj("modelid" -> model))
       f.light
     })
   }
