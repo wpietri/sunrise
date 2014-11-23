@@ -14,14 +14,14 @@ case object Start extends MyMessage
 case object Tick extends MyMessage
 
 
-abstract class MyActor extends Actor {
-  val log = Logging(context.system, this)
-}
-
 object Daemon extends App {
   val system = ActorSystem("Sunrise")
   val wrangler = system.actorOf(Props[Wrangler], "wrangler")
   wrangler ! Start
+}
+
+abstract class MyActor extends Actor {
+  val log = Logging(context.system, this)
 }
 
 class Wrangler extends MyActor {
@@ -39,7 +39,6 @@ class Wrangler extends MyActor {
       log.info("started")
   }
 }
-
 
 class DaylightMode(bridge: Bridge) extends MyActor {
 
