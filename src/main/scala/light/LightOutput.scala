@@ -1,6 +1,7 @@
 package light
 
 case class LightOutput(x: Double, y: Double, lumens: Double) {
+  def this(color: (Double, Double), lumens: Double) = this(color._1, color._2, lumens)
 
   def withLumens(newLumens: Double) = LightOutput(this.x, this.y, newLumens)
 
@@ -21,4 +22,8 @@ case class LightOutput(x: Double, y: Double, lumens: Double) {
 
 
   override def toString: String = f"LightOutput($x%1.3f,$y%1.3f,$lumens%1.0f)"
+}
+
+object LightOutput {
+  def apply(color: (Double, Double), lumens: Double) = new LightOutput(color, lumens)
 }

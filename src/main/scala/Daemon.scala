@@ -30,7 +30,7 @@ class Wrangler extends MyActor {
 
   val bridge = new Bridge(Settings.bridgeAddress, Settings.bridgePort, Settings.bridgeKey)
   val allLights = bridge.group(0)
-  val daylightMode = context.system.actorOf(DaylightMode.props(bridge), "daylight")
+  val daylightMode = context.system.actorOf(DefaultMode.props(bridge), "daylight")
 
   override def receive: Receive = {
     case Start =>
@@ -40,7 +40,7 @@ class Wrangler extends MyActor {
   }
 }
 
-class DaylightMode(bridge: Bridge) extends MyActor {
+class DefaultMode(bridge: Bridge) extends MyActor {
 
   override def receive: Actor.Receive = {
     case Tick =>
@@ -62,7 +62,7 @@ class DaylightMode(bridge: Bridge) extends MyActor {
   }
 }
 
-object DaylightMode {
-  def props(bridge: Bridge): Props = Props(new DaylightMode(bridge))
+object DefaultMode {
+  def props(bridge: Bridge): Props = Props(new DefaultMode(bridge))
 }
 
