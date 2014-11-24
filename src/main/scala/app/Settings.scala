@@ -12,8 +12,8 @@ object Settings {
 
   val dawnStart = new LocalTime(6, 0)
   val dawnLength = Period.hours(3)
-  val duskStart = new LocalTime(18, 30)
-  val duskLength = Period.hours(3)
+  val duskStart = new LocalTime(16, 00)
+  val duskLength = Period.hours(6)
 
   val updateFrequency = 15.seconds
 
