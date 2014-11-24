@@ -19,7 +19,7 @@ To run it, do
 
     sbt assembly
     sudo docker build -t sunrise .
-    sudo docker run sunrise
+    sudo docker run -d sunrise
 
 If you'd rather run it directly, you can also do
 

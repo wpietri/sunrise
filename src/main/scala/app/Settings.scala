@@ -1,3 +1,5 @@
+package app
+
 import org.joda.time._
 
 import scala.concurrent.duration._
@@ -9,14 +11,13 @@ object Settings {
   val localTimeZone = DateTimeZone.forID("America/Los_Angeles")
 
   val dawnStart = new LocalTime(6, 0)
-  val dawnLength = new Period(3, PeriodType.hours())
+  val dawnLength = Period.hours(3)
   val duskStart = new LocalTime(18, 30)
-  val duskLength = new Period(3, PeriodType.hours())
+  val duskLength = Period.hours(3)
 
   val updateFrequency = 15.seconds
 
   val bridgeAddress = "192.168.1.81"
   val bridgePort = 80
   val bridgeKey = "080ed655b6f74144a29fd2f256eff3ae"
-
 }

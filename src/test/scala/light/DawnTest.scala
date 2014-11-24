@@ -1,5 +1,7 @@
 package light
 
+import app.Settings
+import app.Settings._
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers
 
@@ -11,6 +13,10 @@ class DawnTest extends FlatSpec with ShouldMatchers with TestHelpers with LightM
     d(time(7, 30)) should equal(LightOutput(2700, 2000))
     d(time(9)) should equal(LightOutput(6500, 5000))
     d(time(18)) should equal(LightOutput(6500, 5000))
+  }
+
+  "The program" should "be buildable from settings" in {
+    val d = new Dawn(dawnStart, dawnLength)
   }
 
 }

@@ -1,5 +1,7 @@
 package light
 
+import breeze.interpolation.LinearInterpolator
+import breeze.linalg.DenseVector
 import org.joda.time.{LocalTime, Period}
 
 abstract class LightProgram {
@@ -10,6 +12,15 @@ abstract class LightProgram {
 
   def mult(multiplier: Double, period: Period): Period = {
     Period.seconds((multiplier * period.toStandardDuration.getStandardSeconds).toInt)
+  }
+
+  def interpolator(x: Array[Double], y: Array[Double]): LinearInterpolator[Double] = try {
+    new LinearInterpolator(DenseVector(x), DenseVector(y))
+  } catch {
+    case e: java.lang.Exception =>
+      System.err.println("failure; dumping x:")
+      x.foreach(a => System.err.println(a))
+      throw e
   }
 
 }

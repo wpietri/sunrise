@@ -1,3 +1,5 @@
+package app
+
 import akka.actor._
 import akka.event.Logging
 import hue._

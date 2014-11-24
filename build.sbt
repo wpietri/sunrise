@@ -29,7 +29,7 @@ libraryDependencies += "com.github.nscala-time" %% "nscala-time" % "1.4.0"
 
 libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.3.6"
 
-mainClass := Some("Daemon")
+mainClass := Some("app.Daemon")
 
 exportJars := true
 
