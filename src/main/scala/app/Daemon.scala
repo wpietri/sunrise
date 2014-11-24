@@ -47,8 +47,10 @@ class DefaultMode(bridge: Bridge) extends MyActor {
 
   override def receive: Actor.Receive = {
     case Tick =>
-      val lightLevel = defaultProgram(LocalTime.now(Settings.localTimeZone))
-      log.info("desired level: {}", lightLevel)
+      val time = LocalTime.now(Settings.localTimeZone)
+      val lightProgram = defaultProgram.currentProgram(time)
+      val lightLevel = defaultProgram(time)
+      log.info("desired level: {} at {} for {}", lightLevel, time, lightProgram)
       val lightStates = LightOutputCalculator(bridge.lights, lightLevel)
       log.debug("calculated states: {}", lightStates)
       for ((light, level) <- lightStates) {
