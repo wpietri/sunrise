@@ -41,10 +41,11 @@ class Wrangler extends MyActor {
 }
 
 class DefaultMode(bridge: Bridge) extends MyActor {
+  val defaultProgram = new DefaultLightProgram(Settings.dawnStart, Settings.dawnLength, Settings.duskStart, Settings.duskLength)
 
   override def receive: Actor.Receive = {
     case Tick =>
-      val lightLevel = desiredLightOutput(LocalTime.now(Settings.localTimeZone))
+      val lightLevel = defaultProgram(LocalTime.now(Settings.localTimeZone))
       log.info("desired level: {}", lightLevel)
       val lightStates = LightOutputCalculator(bridge.lights, lightLevel)
       log.debug("calculated states: {}", lightStates)
@@ -54,12 +55,6 @@ class DefaultMode(bridge: Bridge) extends MyActor {
       }
   }
 
-  // todo: this moves to the new calculator class (which needs a better name than that)
-  def desiredLightOutput(t: LocalTime): LightOutput = {
-    val desiredColor = ColorTemperatureCurve(DaylightColorCurve(t))
-    val desiredLumens = DaylightLumensCurve(t)
-    LightOutput(desiredColor._1, desiredColor._2, desiredLumens)
-  }
 }
 
 object DefaultMode {
