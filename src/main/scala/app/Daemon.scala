@@ -15,6 +15,8 @@ case object Start extends MyMessage
 
 case object Tick extends MyMessage
 
+case object Log extends MyMessage
+
 
 object Daemon extends App {
   val system = ActorSystem("Sunrise")
@@ -38,6 +40,7 @@ class Wrangler extends MyActor {
     case Start =>
       log.info("starting")
       context.system.scheduler.schedule(1.second, Settings.updateFrequency, daylightMode, Tick)
+      context.system.scheduler.schedule(15.minutes, Settings.updateFrequency, daylightMode, Log)
       log.info("started")
   }
 }
@@ -47,18 +50,22 @@ class DefaultMode(bridge: Bridge) extends MyActor {
 
   override def receive: Actor.Receive = {
     case Tick =>
-      val time = LocalTime.now(Settings.localTimeZone)
-      val lightProgram = defaultProgram.currentProgram(time)
-      val lightLevel = defaultProgram(time)
-      log.info("desired level: {} at {} for {}", lightLevel, time, lightProgram)
-      val lightStates = LightOutputCalculator(bridge.lights, lightLevel)
-      log.debug("calculated states: {}", lightStates)
+      val lightStates = LightOutputCalculator(bridge.lights, currentLightLevel)
       for ((light, level) <- lightStates) {
-        log.info("setting light {} to {}", light, level)
         light.set(level, Settings.updateFrequency)
       }
+
+    case Log =>
+      log.info("desired level: {} for {}", currentLightLevel, defaultProgram.currentProgram(now))
   }
 
+  def currentLightLevel: LightOutput = {
+    defaultProgram.apply(now)
+  }
+
+  def now: LocalTime = {
+    LocalTime.now(Settings.localTimeZone)
+  }
 }
 
 object DefaultMode {
