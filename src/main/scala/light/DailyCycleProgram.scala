@@ -2,7 +2,7 @@ package light
 
 import org.joda.time.{LocalTime, Period}
 
-class DefaultLightProgram(dawnStart: LocalTime, dawnDuration: Period,
+class DailyCycleProgram(dawnStart: LocalTime, dawnDuration: Period,
                           duskStart: LocalTime, duskDuration: Period) extends LightProgram {
   var dawnEnd = dawnStart.plus(dawnDuration)
   var duskEnd = duskStart.plus(duskDuration)

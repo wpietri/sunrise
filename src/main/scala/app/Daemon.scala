@@ -34,19 +34,19 @@ class Wrangler extends MyActor {
 
   val bridge = new Bridge(Settings.bridgeAddress, Settings.bridgePort, Settings.bridgeKey)
   val allLights = bridge.group(0)
-  val daylightMode = context.system.actorOf(DefaultMode.props(bridge), "daylight")
+  val lightingMode = context.system.actorOf(DefaultMode.props(bridge), "daylight")
 
   override def receive: Receive = {
     case Start =>
       log.info("starting")
-      context.system.scheduler.schedule(1.second, Settings.updateFrequency, daylightMode, Tick)
-      context.system.scheduler.schedule(15.minutes, Settings.updateFrequency, daylightMode, Log)
+      context.system.scheduler.schedule(1.second, Settings.updateFrequency, lightingMode, Tick)
+      context.system.scheduler.schedule(1.second, 15.minutes, lightingMode, Log)
       log.info("started")
   }
 }
 
 class DefaultMode(bridge: Bridge) extends MyActor {
-  val defaultProgram = new DefaultLightProgram(Settings.dawnStart, Settings.dawnLength, Settings.duskStart, Settings.duskLength)
+  val defaultProgram = new DailyCycleProgram(Settings.dawnStart, Settings.dawnLength, Settings.duskStart, Settings.duskLength)
 
   override def receive: Actor.Receive = {
     case Tick =>
