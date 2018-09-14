@@ -4,7 +4,7 @@ import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers
 
 class DailyCycleProgramTest extends FlatSpec with ShouldMatchers with TestHelpers with LightMatchers {
-  "The result" should "be bright and cool to warm and dim" in {
+  "The result" should "match a full day/night cycle" in {
     val d = new DailyCycleProgram(time(6), period(3), time(16), period(6))
     d(time(0)) should equal(LightOutput(1000, 0))
     d(time(6)) should equal(LightOutput(1000, 0))

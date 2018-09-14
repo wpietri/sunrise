@@ -17,7 +17,6 @@ it, we can make it more configurable and flexible.
 
 To run it, do
 
-    sbt assembly
     sudo docker build -t sunrise .
     sudo docker run -d sunrise
 
@@ -37,6 +36,10 @@ find handy, things I ended up having to make as I went along.
 
 build environment
 =================
+
+If you're doing a Docker build, all you need is a version of Docker at
+or after 17.05, which supports multi-stage builds.
+
 
 To build this on Ubuntu 14.04 you'll have to do something like
 
