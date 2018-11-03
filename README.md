@@ -9,11 +9,8 @@ sleep cycle, even when the light outside isn't cooperating due to
 clouds, rain, or the dark mornings and early nights of winter.
 
 It is currently a simple Scala daemon wrapped in Docker for easy
-deployment.
+deployment. It is configured via environment variables; see below for more.
 
-Note that the current code is specific to my own setup and preferences,
-and is mainly offered as an example. If others are interested in using
-it, we can make it more configurable and flexible.
 
 To run it, do
 
@@ -25,6 +22,39 @@ If you'd rather run it directly, you can also do
     sbt assembly
     java -jar [buildpath]/sunrise.jar
     
+configuration
+=============
+
+All configuration is through environment variables. There are two mandatory
+ones:
+* **SUNRISE_HUE_HOST** - the address of the Philips Hue bridge. E.g.,
+`hue.local` or `192.168.1.123`
+* **SUNRISE_HUE_KEY** - the key for the Philips Hue bridge. A long hex
+string you get from the bridge API
+
+There are a few optional ones. Sunrise's basic model is that there is night, with
+all lights off, and day, with all lights on. The transition periods between the two
+are dawn and dusk, which have configurable starts and durations.
+
+* **SUNRISE_DAWN_START** - When dawn starts; the moment lights go from off to the
+dimmest red. Default: `6:00`
+* **SUNRISE_DAWN_LENGTH** - How many hours the dawn lasts. Default `3`
+* **SUNRISE_DUSK_START** - When dusk starts; the moment lights go from full on to
+a tiny bit dimmer. Default: `16:00`
+* **SUNRISE_DUSK_LENGTH** - How many hours the dusk lasts. Default `6`
+
+So by default, the lights come on very dim at 6 am and are fully on by 9. Then at
+4 pm they start dimming
+again and are fully off at 10 pm.
+
+You should probably also set the time zone. 
+
+* **SUNRISE_TIMEZONE** - The time zone the app should use. On Linux, your current one
+is in `/etc/timezone`. Wikipedia has a [full list](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
+
+If I'm going to be flying to a different time zone, I sometimes shift my schedule
+before I go. You can do that by giving sunrise a different time zone every day or two.
+
 
 
 tools

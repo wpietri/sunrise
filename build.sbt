@@ -1,16 +1,16 @@
-import sbtassembly.Plugin.AssemblyKeys._
-
 // put this at the top of the file
 
 // name := "sunrise"
 
 version := "1.0"
 
+scalaVersion := "2.10.4"
+
 resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/"
 
 libraryDependencies ++= Seq(
-  "org.scalanlp" %% "breeze" % "0.9",
-  "org.scalanlp" %% "breeze-natives" % "0.9"
+  "org.scalanlp" %% "breeze" % "0.13",
+  "org.scalanlp" %% "breeze-natives" % "0.13"
 )
 
 resolvers ++= Seq(
@@ -34,6 +34,6 @@ mainClass := Some("app.Daemon")
 exportJars := true
 
 
-assemblySettings
+//assemblySettings
 
 jarName in assembly := "sunrise.jar"
