@@ -13,6 +13,7 @@ class FakeApiConnector extends ApiConnector {
   def addResponse(path: String, data: JsObject) = getResponses("/api/dummykey" + path) = data
 
   override def get(path: String): JsObject = {
+    print(this)
     lastPath = path
     if (nextGetResponse == null) {
       getResponses(path)

@@ -33,8 +33,7 @@ class Wrangler extends MyActor {
   import context._
 
   val bridge = new Bridge(Settings.bridgeAddress, Settings.bridgePort, Settings.bridgeKey)
-  val allLights = bridge.group(0)
-  val lightingMode = context.system.actorOf(DefaultMode.props(bridge), "daylight")
+  val lightingMode: ActorRef = context.system.actorOf(DefaultMode.props(bridge), "daylight")
 
   override def receive: Receive = {
     case Start =>
@@ -50,9 +49,12 @@ class DefaultMode(bridge: Bridge) extends MyActor {
 
   override def receive: Actor.Receive = {
     case Tick =>
-      val lightStates = LightOutputCalculator(bridge.lights, currentLightLevel)
-      for ((light, level) <- lightStates) {
-        light.set(level, Settings.updateFrequency)
+      for (group <- bridge.groups) {
+        val lightStates = LightOutputCalculator(group.lights, currentLightLevel)
+        for ((light, level) <- lightStates) {
+          //          log.info("setting {} / {} to {}", group, light, level)
+          light.set(level, Settings.updateFrequency)
+        }
       }
 
     case Log =>

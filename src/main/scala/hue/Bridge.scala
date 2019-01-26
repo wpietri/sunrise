@@ -17,6 +17,8 @@ class Bridge(api: ApiConnector, key: String) {
 
   def lights: Seq[Light] = get("/lights").keys.map(id => light(id.toInt)).toSeq
 
+  def groups: Seq[Group] = get("/groups").keys.map(id => group(id.toInt)).toSeq
+
 
   def get(path: String): JsObject = api.get("/api/" + key + path)
 

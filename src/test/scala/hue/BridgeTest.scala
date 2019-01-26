@@ -21,7 +21,16 @@ class BridgeTest extends FlatSpec with ShouldMatchers {
     lights.size should be(5)
   }
 
-  val FullBridgeLightResponse = Json.parse(
+  it should "know all groups" in {
+    val f = fixture
+
+    f.api.nextGetResponse = AllGroupsResponse.as[JsObject]
+    val groups = f.bridge.groups
+    f.api.lastPath should endWith("/groups")
+    groups.size should be(2)
+  }
+
+  private val FullBridgeLightResponse = Json.parse(
     """
         {
         	"1": {
@@ -171,6 +180,57 @@ class BridgeTest extends FlatSpec with ShouldMatchers {
         		}
         	}
         }
+    """.stripMargin)
+
+  private val AllGroupsResponse = Json.parse(
+    """
+            {
+              "1": {
+                  "name": "Group 1",
+                  "lights": [
+                      "1",
+                      "2"
+                  ],
+                  "type": "LightGroup",
+                  "action": {
+                      "on": true,
+                      "bri": 254,
+                      "hue": 10000,
+                      "sat": 254,
+                      "effect": "none",
+                      "xy": [
+                          0.5,
+                          0.5
+                      ],
+                      "ct": 250,
+                      "alert": "select",
+                      "colormode": "ct"
+                  }
+              },
+              "2": {
+                  "name": "Group 2",
+                  "lights": [
+                      "3",
+                      "4",
+                      "5"
+                  ],
+                  "type": "LightGroup",
+                  "action": {
+                      "on": true,
+                      "bri": 153,
+                      "hue": 4345,
+                      "sat": 254,
+                      "effect": "none",
+                      "xy": [
+                          0.5,
+                          0.5
+                      ],
+                      "ct": 250,
+                      "alert": "select",
+                      "colormode": "ct"
+                  }
+              }
+          }
     """.stripMargin)
 
 }
